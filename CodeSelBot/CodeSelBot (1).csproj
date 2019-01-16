@@ -176,7 +176,6 @@
     <Compile Include="Discord\Classes\ServerChannels.cs" />
     <Compile Include="Discord\Classes\ServerDictionary.cs" />
     <Compile Include="Discord\Classes\ServerRole.cs" />
-    <Compile Include="Discord\Classes\UserWarframeSub.cs" />
     <Compile Include="Discord\Classes\UserPreferences.cs" />
     <Compile Include="Discord\Classes\UserSubs.cs" />
     <Compile Include="Discord\Classes\UserTracking.cs" />
@@ -209,19 +208,10 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PC_Console.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="PC_Console.Designer.cs">
-      <DependentUpon>PC_Console.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PC_Console.resx">
-      <DependentUpon>PC_Console.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -283,12 +273,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Code.SEL Reborn Emoji 3.0.ico" />
-    <None Include="Resources\Tiny_Connect.png" />
-    <None Include="Resources\Tiny_Message.png" />
-    <None Include="Resources\Tiny_Offline.png" />
-    <None Include="Resources\Tiny_Logout.png" />
-    <None Include="Resources\Tiny_Move.png" />
-    <None Include="Resources\Tiny_Console.png" />
     <EmbeddedResource Include="WarframeBossIcons.json" />
     <None Include="Resources\Icon_Move.png" />
   </ItemGroup>
@@ -298,7 +282,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties WarframeBossIcons_1json__JSONSchema="http://json.schemastore.org/apple-app-site-association" />
+      <UserProperties WarframeBossIcons_1json__JSONSchema="http://json.schemastore.org/apple-app-site-association" bin_4Debug_4DiscordDictionary_1json__JSONSchema="http://json.schemastore.org/config" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

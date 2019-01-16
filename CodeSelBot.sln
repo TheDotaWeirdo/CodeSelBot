@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeSelBot", "CodeSelBot\CodeSelBot.csproj", "{77BCD20A-F9CC-49F3-AC0A-1C2924825F16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions", "..\Extensions\Extensions\Extensions.csproj", "{50EA98FD-47B0-40BC-A51E-3DEFB2525F2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlickControls", "..\SlickControls\SlickControls\SlickControls.csproj", "{2C0E1D8A-6619-4116-98EE-3F9E6C937537}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{77BCD20A-F9CC-49F3-AC0A-1C2924825F16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77BCD20A-F9CC-49F3-AC0A-1C2924825F16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77BCD20A-F9CC-49F3-AC0A-1C2924825F16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50EA98FD-47B0-40BC-A51E-3DEFB2525F2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50EA98FD-47B0-40BC-A51E-3DEFB2525F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50EA98FD-47B0-40BC-A51E-3DEFB2525F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50EA98FD-47B0-40BC-A51E-3DEFB2525F2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C0E1D8A-6619-4116-98EE-3F9E6C937537}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C0E1D8A-6619-4116-98EE-3F9E6C937537}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C0E1D8A-6619-4116-98EE-3F9E6C937537}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C0E1D8A-6619-4116-98EE-3F9E6C937537}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

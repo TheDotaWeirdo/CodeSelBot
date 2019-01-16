@@ -1,0 +1,170 @@
+{
+  "ServerID": 155958788447404032,
+  "ServerOwnerID": 155955179852791809,
+  "BotID": 317261382900908033,
+  "Roles": {
+    "ServerOwner": {
+      "ID": 218442977121402891,
+      "IsGaming": false,
+      "VoiceChannel": null
+    },
+    "ServerBot": {
+      "ID": 276033405089480714,
+      "IsGaming": false,
+      "VoiceChannel": null
+    },
+    "Banned": {
+      "ID": 318135042415001600,
+      "IsGaming": false,
+      "VoiceChannel": null
+    },
+    "Exiled": {
+      "ID": 279279809237090304,
+      "IsGaming": false,
+      "VoiceChannel": null
+    },
+    "HOE": {
+      "ID": 217651275083415562,
+      "IsGaming": false,
+      "VoiceChannel": null
+    },
+    "CodeSEL": {
+      "ID": 217294542020411392,
+      "IsGaming": false,
+      "VoiceChannel": null
+    },
+    "BOTS": {
+      "ID": 272385653420064768,
+      "IsGaming": false,
+      "VoiceChannel": null
+    },
+    "Dota2": {
+      "ID": 217704302892810250,
+      "IsGaming": true,
+      "VoiceChannel": 155960591083634688
+    },
+    "RocketLeague": {
+      "ID": 279698883456794624,
+      "IsGaming": true,
+      "VoiceChannel": 218475874398371841
+    },
+    "COUNTER STRIKE GLOBAL OFFENSIVE": {
+      "ID": 265924787728023553,
+      "IsGaming": true,
+      "VoiceChannel": 249452569880035329
+    },
+    "PLAYERUNKNOWNS BATTLEGROUNDS": {
+      "ID": 248905441185103873,
+      "IsGaming": true,
+      "VoiceChannel": 235865341782261760
+    },
+    "RealmRoyale": {
+      "ID": 460003280731242497,
+      "IsGaming": true,
+      "VoiceChannel": 460007211461115919
+    },
+    "Warframe": {
+      "ID": 460003398184468480,
+      "IsGaming": true,
+      "VoiceChannel": 460008155288436765
+    }
+  },
+  "Channels": {
+    "CodeSelRoom": {
+      "ID": 361582829580058626,
+      "Type": "Voice",
+      "IsGaming": false,
+      "Role": null
+    },
+    "AFK": {
+      "ID": 155958790124994560,
+      "Type": "Voice",
+      "IsGaming": false,
+      "Role": null
+    },
+    "Main": {
+      "ID": 235871481307987968,
+      "Type": "Voice",
+      "IsGaming": false,
+      "Role": null
+    },
+    "Gaming": {
+      "ID": 272736534418161664,
+      "Type": "Voice",
+      "IsGaming": true,
+      "Role": null
+    },
+    "Dota2": {
+      "ID": 155960591083634688,
+      "Type": "Voice",
+      "IsGaming": true,
+      "Role": 217704302892810250
+    },
+    "RocketLeague": {
+      "ID": 218475874398371841,
+      "Type": "Voice",
+      "IsGaming": true,
+      "Role": 279698883456794624
+    },
+    "COUNTER STRIKE GLOBAL OFFENSIVE": {
+      "ID": 249452569880035329,
+      "Type": "Voice",
+      "IsGaming": true,
+      "Role": 265924787728023553
+    },
+    "PLAYERUNKNOWNS BATTLEGROUNDS": {
+      "ID": 235865341782261760,
+      "Type": "Voice",
+      "IsGaming": true,
+      "Role": 248905441185103873
+    },
+    "RealmRoyale": {
+      "ID": 460007211461115919,
+      "Type": "Voice",
+      "IsGaming": true,
+      "Role": 460003280731242497
+    },
+    "Warframe": {
+      "ID": 460008155288436765,
+      "Type": "Voice",
+      "IsGaming": true,
+      "Role": 460003398184468480
+    },
+    "Announcements": {
+      "ID": 155958788447404032,
+      "Type": "Text",
+      "IsGaming": false,
+      "Role": null
+    },
+    "BotTesting": {
+      "ID": 272501450809278474,
+      "Type": "Text",
+      "IsGaming": false,
+      "Role": null
+    },
+    "MainVoice": {
+      "ID": 155958788447404032,
+      "Type": "Text",
+      "IsGaming": false,
+      "Role": null
+    },
+    "RythmMix": {
+      "ID": 443463467974918176,
+      "Type": "Text",
+      "IsGaming": false,
+      "Role": null
+    },
+    "WarframeText": {
+      "ID": 470894048400637952,
+      "Type": "Text",
+      "IsGaming": true,
+      "Role": null
+    },
+    "ServerInfo": {
+      "ID": 227865516260196352,
+      "Type": "Text",
+      "IsGaming": false,
+      "Role": null
+    }
+  }
+}

@@ -117,47 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Tiny_Logout" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tiny_Logout.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Icon_Retry" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon_Retry.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Tiny_Move" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tiny_Move.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Code.SEL Reborn Emoji 2.0" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Code.SEL Reborn Emoji 2.0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Icon_Console" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon_Console.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Tiny_Console" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tiny_Console.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Icon_Offline" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon_Offline.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Tiny_Offline" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tiny_Offline.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Icon_Message" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon_Message.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Icon_Logout" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon_Logout.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Icon_Move" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon_Move.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Tiny_Message" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tiny_Message.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Icon_Online" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Icon_Online.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Tiny_Connect" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tiny_Connect.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>
