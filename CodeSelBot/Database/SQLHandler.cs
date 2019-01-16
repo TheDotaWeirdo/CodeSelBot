@@ -80,6 +80,12 @@ namespace SchoolSystemManager.Database
 				data.Tracking.LastOnline.If(x => x.Year <= 1753, new DateTime(1753, 1, 1)),
 				data.Tracking.OnlineSince.If(x => x.Year <= 1753, new DateTime(1753, 1, 1)));
 
+		public static void Rythm_Log(string data)
+			=> SqlHelper.ExecuteNonQuery(ConnectionString, "Rythm_Log", data);
+
+		public static IEnumerable<string> Rythm_GetHistory(DateTime? date, int max = 100)
+			=> SqlHelper.ExecuteReader(ConnectionString, "Rythm_GetHistory", date, max).Select(x => x["Song"].ToString());
+
 		#region Other
 
 		public static IEnumerable<T> Select<T>(this IDataReader reader, Func<IDataReader, T> projection)

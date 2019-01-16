@@ -70,6 +70,9 @@ namespace CodeSelBot.Discord.Modules
 
 			var time = DateTimeOffset.Now.AddTicks(new TimeSpan(-hours, -mins, -secs).Ticks);
 
+			if (context.Contains("today"))
+				time = new DateTimeOffset(DateTime.Today);
+
 			var msgsToDelete = msgs.Where(x => x.Timestamp > time && (users.Count == 0 || users.Any(u => u.Id == x.Author.Id))).Take(count);
 
 			await Context.Channel.DeleteMessagesAsync(msgsToDelete);

@@ -190,6 +190,7 @@
     <Compile Include="Discord\Modules\CoinFlip.cs" />
     <Compile Include="Discord\Modules\BeRightBack.cs" />
     <Compile Include="Discord\Modules\ChooseBetween.cs" />
+    <Compile Include="Discord\Modules\Rythm.cs" />
     <Compile Include="Discord\Modules\Warframe.cs" />
     <Compile Include="Discord\Modules\Info.cs" />
     <Compile Include="Discord\Modules\Select.cs" />

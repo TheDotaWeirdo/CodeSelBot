@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -105,8 +106,28 @@ namespace CodeSelBot.Discord
 		{
 			var message = arg as SocketUserMessage;
 
+			var regex = Regex.Match(message.Content, Regex.Escape(@"<:youtube:335112740957978625> **Searching** 🔎 ") + "`(.+)`");
+
 			if (arg.Channel.Id == Global.ServerDictionary.Channels["RythmMix"].ID)
-				arg.SelfDestruct(arg.Author.Username == "Rythm" ? 120000 : 30000);
+			{
+				arg.SelfDestruct(arg.Author.Id.AnyOf<ulong>(235088799074484224, 317261382900908033) ? 150000 : 30000);
+
+				if(arg.Author.Id == 235088799074484224)
+				{
+					var msg = string.Empty;
+
+					if (message.Embeds.Any() && message.Embeds.First().Author?.Name == "Added to queue")
+						msg = message.Embeds.First().Description;
+					else if (Regex.IsMatch(message.Content, Regex.Escape(@"**Playing** 🎶 ")))
+						msg = Regex.Match(message.Content, Regex.Escape(@"**Playing** 🎶 ") + "(`.+`)").Groups[1].Value;
+
+					if (msg != string.Empty)
+					{
+						SQLHandler.Rythm_Log(msg);
+						Log(ActionType.Add, LogSeverity.Info, "Rythm Hist", msg);
+					}
+				}
+			}
 			else if (arg.Channel.Id == Global.ServerDictionary.Channels["WarframeText"].ID)
 				if (!(arg.Author.Id == Global.ServerDictionary.BotID || arg.Content.StartsWith("-warframe")))
 					arg.SelfDestruct(5000);
