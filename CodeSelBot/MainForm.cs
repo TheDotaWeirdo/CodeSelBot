@@ -37,6 +37,7 @@ namespace CodeSelBot
 			PI_ShutDown.OnClick += (s, e) => { Global.Bot.Disconnect(); Global.Bot = null; };
 
 			Global.Bot.ConsoleChanged += OnConsoleChanged;
+			Location = SystemInformation.VirtualScreen.Center(Size);
 		}
 
 		protected override void OnFormClosing(FormClosingEventArgs e)

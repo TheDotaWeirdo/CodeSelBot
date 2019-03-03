@@ -35,6 +35,8 @@
 			this.PI_Message = new SlickControls.Panels.PanelItem();
 			this.PI_Clear = new SlickControls.Panels.PanelItem();
 			this.PI_ShutDown = new SlickControls.Panels.PanelItem();
+			this.base_P_Container.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.base_PB_Icon)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// base_P_Content
@@ -44,7 +46,16 @@
 			// 
 			// base_P_SideControls
 			// 
-			this.base_P_SideControls.Location = new System.Drawing.Point(0, 309);
+			this.base_P_SideControls.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(114)))), ((int)(((byte)(129)))), ((int)(((byte)(150)))));
+			this.base_P_SideControls.Location = new System.Drawing.Point(0, 311);
+			// 
+			// base_P_Container
+			// 
+			this.base_P_Container.Size = new System.Drawing.Size(783, 433);
+			// 
+			// base_PB_Icon
+			// 
+			this.base_PB_Icon.Image = global::CodeSelBot.Properties.Resources.Code_SEL_Reborn_Emoji_2_0;
 			// 
 			// PI_Reconnect
 			// 
@@ -112,8 +123,11 @@
         this.PI_Message,
         this.PI_Clear,
         this.PI_ShutDown};
+			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Text = "Code.Sel Bot";
 			this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+			this.base_P_Container.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.base_PB_Icon)).EndInit();
 			this.ResumeLayout(false);
 
 		}

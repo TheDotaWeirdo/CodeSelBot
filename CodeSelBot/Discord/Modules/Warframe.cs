@@ -1,15 +1,15 @@
-﻿using CodeSelBot.Discord.Classes;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using CodeSelBot.Discord.Classes;
 using Discord;
 using Discord.Commands;
 using Extensions;
 using Newtonsoft.Json;
 using RestSharp;
 using SchoolSystemManager.Database;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CodeSelBot.Discord.Modules
 {
@@ -28,6 +28,8 @@ namespace CodeSelBot.Discord.Modules
 				func.Add(WarframeSubscribe);
 			else
 			{
+				if (context.Contains("nightwave") || context.ContainsWord("nw"))
+					func.Add(WarframeNightwave);
 				if (context.Contains("alert") || context.ContainsWord("a"))
 					func.Add(WarframeAlerts);
 				if (context.Contains("cetus") || context.ContainsWord("c"))
@@ -38,13 +40,15 @@ namespace CodeSelBot.Discord.Modules
 					func.Add(WarframeFissures);
 				if (context.Contains("sortie") || context.ContainsWord("s"))
 					func.Add(WarframeSortie);
-                if (context.Contains("baro") || context.ContainsWord("b"))
-                    func.Add(WarframeBaro);
-                if (context.Contains("acolyte") || context.ContainsWord("ac"))
-                    func.Add(WarframeAcolytes);
-                if (context.Contains("ostron") || context.ContainsWord("o"))
-                    func.Add(WarframeOstron);
-            }
+				if (context.Contains("baro") || context.ContainsWord("b"))
+					func.Add(WarframeBaro);
+				if (context.Contains("acolyte") || context.ContainsWord("ac"))
+					func.Add(WarframeAcolytes);
+				if (context.Contains("ostron") || context.ContainsWord("o"))
+					func.Add(WarframeOstron);
+				if (context.Contains("vallis") || context.ContainsWord("v"))
+					func.Add(WarframeValis);
+			}
 
 			if (func.Count == 0)
 			{ ex = new Exception("Context is invalid"); errPart = ErrorPart.User; goto err; }
@@ -101,53 +105,72 @@ namespace CodeSelBot.Discord.Modules
 					$"**Type:** {alert.mission.archwingRequired.If("Archwing ", "")}{alert.mission.nightmare.If("Nightmare ", "")}" +
 					$"{alert.mission.type}\n**Rewards:** {alert.mission.reward.itemString.If(string.IsNullOrEmpty, x => "", x => x + " & ")}{alert.mission.reward.credits} <:WarframeCredits:470867750101975051> Credits\n\u200b");
 			}
-			
+
 			if (embed.Fields.Count == 0)
-				await ReplyAsync("No Alerts match your querry").SelfDestruct(30000);
+				await ReplyAsync("No Alerts match your query").SelfDestruct(30000);
 			else
 				await ReplyAsync("", embed: embed.Build()).SelfDestruct(600000);
-        }
+		}
 
-        private async Task WarframeOstron(WarframeInfo inf, string context)
-        {
-            var ostron = inf.syndicateMissions.FirstThat(x => x.syndicate == "Ostrons");
-            var embed = new EmbedBuilder();
-            var @params = context.Split(' ');
+		private async Task WarframeOstron(WarframeInfo inf, string context)
+		{
+			var ostron = inf.syndicateMissions.FirstThat(x => x.syndicate == "Ostrons");
+			var embed = new EmbedBuilder();
+			var @params = context.Split(' ');
 
-            embed
-                .WithColor(Color.Blue)
-                .WithFooter($"Requested by {Context.User.Username}")
-                .WithCurrentTimestamp()
-                .WithThumbnailUrl("https://vignette.wikia.nocookie.net/warframe/images/8/80/OstronSigil.png/revision/latest/scale-to-width-down/350?cb=20171017011442")
-                .WithTitle("Current Ostron Bounties")
-                .WithDescription($"Bounties will expire in {ostron.eta}\n\u200b");
+			embed
+				 .WithColor(Color.Blue)
+				 .WithFooter($"Requested by {Context.User.Username}")
+				 .WithCurrentTimestamp()
+				 .WithThumbnailUrl("https://vignette.wikia.nocookie.net/warframe/images/8/80/OstronSigil.png/revision/latest/scale-to-width-down/350?cb=20171017011442")
+				 .WithTitle("Current Ostron Bounties")
+				 .WithDescription($"Bounties will expire in {ostron.eta}\n\u200b");
 
-            foreach (var job in ostron.jobs)
-            {
-					embed.AddField($"{job.type} ({job.enemyLevels[0]} - {job.enemyLevels[1]})",
-						$"Rewards {job.standingStages.Sum()} Standing over {job.standingStages.Length} missions\n\n" +
-						job.rewardPool.ListStrings(x => $"  • {x}\n") +
-						$"\u200b");
-            }
+			foreach (var job in ostron.jobs)
+			{
+				embed.AddField($"{job.type} ({job.enemyLevels[0]} - {job.enemyLevels[1]})",
+					$"Rewards {job.standingStages.Sum()} Standing over {job.standingStages.Length} missions\n\n" +
+					job.rewardPool.ListStrings(x => $"  • {x}\n") +
+					$"\u200b");
+			}
 
-            await ReplyAsync("", embed: embed.Build()).SelfDestruct(600000);
-        }
+			await ReplyAsync("", embed: embed.Build()).SelfDestruct(600000);
+		}
 
-      private async Task WarframeCetus(WarframeInfo inf, string context)
+		private async Task WarframeCetus(WarframeInfo inf, string context)
 		{
 			var embed = new EmbedBuilder();
 
 			embed
 				.WithFooter($"Requested by {Context.User.Username}")
 				.WithCurrentTimestamp()
-				.WithTitle(( inf.cetusCycle.isDay ? ":sunny:" : ":full_moon:" ) + " Cetus Cycle");
+				.WithTitle((inf.cetusCycle.isDay ? ":sunny:" : ":full_moon:") + " Cetus Cycle");
 
 			if (inf.cetusCycle.isDay)
 				embed.WithColor(249, 229, 82);
 			else
 				embed.WithColor(82, 90, 249);
 
-			embed.WithDescription($"Currently {( inf.cetusCycle.isDay ? "Day" : "Night" )}-Time, {inf.cetusCycle.timeLeft} till {( inf.cetusCycle.isDay ? "Night" : "Day" )}\n\nGet notified when this cycle ends with `-warframe sub cetus`");
+			embed.WithDescription($"Currently {(inf.cetusCycle.isDay ? "Day" : "Night")}-Time, {inf.cetusCycle.timeLeft} till {(inf.cetusCycle.isDay ? "Night" : "Day")}\n\nGet notified when this cycle ends with `-warframe sub cetus`");
+
+			await ReplyAsync("", embed: embed.Build()).SelfDestruct(600000);
+		}
+
+		private async Task WarframeValis(WarframeInfo inf, string context)
+		{
+			var embed = new EmbedBuilder();
+
+			embed
+				.WithFooter($"Requested by {Context.User.Username}")
+				.WithCurrentTimestamp()
+				.WithTitle((inf.vallisCycle.isWarm ? ":white_sun_small_cloud:" : ":snowflake:") + " Vallis Cycle");
+
+			if (inf.vallisCycle.isWarm)
+				embed.WithColor(249, 229, 82);
+			else
+				embed.WithColor(82, 90, 249);
+
+			embed.WithDescription($"Currently {(inf.vallisCycle.isWarm ? "Warm" : "Cold")}, {inf.vallisCycle.timeLeft} till {(inf.vallisCycle.isWarm ? "Cold" : "Warm")}\n\nGet notified when this cycle ends with `-warframe sub vallis`");
 
 			await ReplyAsync("", embed: embed.Build()).SelfDestruct(600000);
 		}
@@ -178,14 +201,14 @@ namespace CodeSelBot.Discord.Modules
 					continue;
 
 				if (@params.Any("t1", "t2", "t3", "t4") && !@params.Any(x => x == $"t{fissure.tierNum}"))
-						continue;
+					continue;
 
 				embed.AddField($"{WarframeExtensions.GetFactionIcon(fissure.enemy)} {fissure.node} • {fissure.tier} • Expires in {fissure.eta}",
 					$"{fissure.missionType} Tier {fissure.tierNum} Fissure\n\u200b");
 			}
-			
+
 			if (embed.Fields.Count == 0)
-				await ReplyAsync("No Fissures match your querry").SelfDestruct(30000);
+				await ReplyAsync("No Fissures match your query").SelfDestruct(30000);
 			else
 				await ReplyAsync("", embed: embed.Build()).SelfDestruct(600000);
 		}
@@ -230,7 +253,7 @@ namespace CodeSelBot.Discord.Modules
 			}
 
 			if (embed.Fields.Count == 0)
-				await ReplyAsync("No Invasions match your querry").SelfDestruct(30000);
+				await ReplyAsync("No Invasions match your query").SelfDestruct(30000);
 			else
 				await ReplyAsync("", embed: embed.Build()).SelfDestruct(600000);
 		}
@@ -253,67 +276,67 @@ namespace CodeSelBot.Discord.Modules
 			}
 
 			await ReplyAsync("", embed: embed.Build()).SelfDestruct(600000);
-        }
+		}
 
-        private async Task WarframeBaro(WarframeInfo inf, string context)
-        {
-            var embed = new EmbedBuilder();
+		private async Task WarframeBaro(WarframeInfo inf, string context)
+		{
+			var embed = new EmbedBuilder();
 
-            embed
-                .WithFooter($"Requested by {Context.User.Username}")
-                .WithCurrentTimestamp()
-                .WithTitle("Baro Ki'Teer")
-                .WithColor(72, 148, 162)
-                .WithThumbnailUrl("https://i.imgur.com/y9qT4VK.png");
+			embed
+				 .WithFooter($"Requested by {Context.User.Username}")
+				 .WithCurrentTimestamp()
+				 .WithTitle("Baro Ki'Teer")
+				 .WithColor(72, 148, 162)
+				 .WithThumbnailUrl("https://i.imgur.com/y9qT4VK.png");
 
-            if (inf.voidTrader.active)
-            {
-                embed.WithDescription($"Baro Ki'Teer is currently in the {inf.voidTrader.location}\n\n\u200b");
+			if (inf.voidTrader.active)
+			{
+				embed.WithDescription($"Baro Ki'Teer is currently in the {inf.voidTrader.location}\n\n\u200b");
 
-                foreach (var item in inf.voidTrader.inventory)
-                {
-                    embed.AddInlineField(item.item, $"{item.ducats} <:ducats:472659552383533068>  •  {item.credits} <:WarframeCredits:470867750101975051>\n\u200b");
-                }
-            }
-            else
-                embed.WithDescription($"Baro Ki'Teer is due in {inf.voidTrader.startString}");
+				foreach (var item in inf.voidTrader.inventory)
+				{
+					embed.AddInlineField(item.item, $"{item.ducats} <:ducats:472659552383533068>  •  {item.credits} <:WarframeCredits:470867750101975051>\n\u200b");
+				}
+			}
+			else
+				embed.WithDescription($"Baro Ki'Teer is due in {inf.voidTrader.startString}");
 
-            await ReplyAsync("", embed: embed.Build()).SelfDestruct(600000);
-        }
+			await ReplyAsync("", embed: embed.Build()).SelfDestruct(600000);
+		}
 
-        private async Task WarframeAcolytes(WarframeInfo inf, string context)
-        {
-            foreach (var acolyte in inf.persistentEnemies)
-            {
-                var embed = new EmbedBuilder();
+		private async Task WarframeAcolytes(WarframeInfo inf, string context)
+		{
+			foreach (var acolyte in inf.persistentEnemies)
+			{
+				var embed = new EmbedBuilder();
 
-                embed
-                    .WithFooter($"Requested by {Context.User.Username}")
-                    .WithCurrentTimestamp()
-                    .WithTitle($"{acolyte.agentType} Info")
-                    .WithColor(Color.DarkRed)
-                    .WithAcolyte(acolyte.agentType)
-                    .AddInlineField("Health", $"{Math.Round(100 * acolyte.healthPercent, 2)} %")
-                    .AddInlineField("Rank", acolyte.rank)
-                    .AddInlineField("Flee Damage", acolyte.fleeDamage);
+				embed
+					 .WithFooter($"Requested by {Context.User.Username}")
+					 .WithCurrentTimestamp()
+					 .WithTitle($"{acolyte.agentType} Info")
+					 .WithColor(Color.DarkRed)
+					 .WithAcolyte(acolyte.agentType)
+					 .AddInlineField("Health", $"{Math.Round(100 * acolyte.healthPercent, 2)} %")
+					 .AddInlineField("Rank", acolyte.rank)
+					 .AddInlineField("Flee Damage", acolyte.fleeDamage);
 
-                if (acolyte.isDiscovered)
-                    embed.WithDescription($"**{acolyte.agentType}** is currently on **{acolyte.lastDiscoveredAt}**\n\u200b");
-                else
-                    embed.WithDescription($"**{acolyte.agentType}** is not currently discovered\n\u200b");
+				if (acolyte.isDiscovered)
+					embed.WithDescription($"**{acolyte.agentType}** is currently on **{acolyte.lastDiscoveredAt}**\n\u200b");
+				else
+					embed.WithDescription($"**{acolyte.agentType}** is not currently discovered\n\u200b");
 
-                await ReplyAsync("", embed: embed.Build()).SelfDestruct(600000);
-            }
-        }
+				await ReplyAsync("", embed: embed.Build()).SelfDestruct(600000);
+			}
+		}
 
-        private async Task WarframeSubscribe(WarframeInfo inf, string context)
+		private async Task WarframeSubscribe(WarframeInfo inf, string context)
 		{
 			var sub = !context.StartsWith("un");
 			var @params = context.Split(' ');
 			var dat = Context.User.GetData();
 			var valid = false;
 
-			if(context.Contains(',') && Regex.IsMatch(context, @"(\w+),(.+)"))
+			if (context.Contains(',') && Regex.IsMatch(context, @"(\w+),(.+)"))
 			{
 				var match = Regex.Match(context, @"(\w+),(.+)");
 				var subInf = new UserWarframeSub(Context.User.Id, match.Groups[1].Value, match.Groups[2].Value);
@@ -356,51 +379,51 @@ namespace CodeSelBot.Discord.Modules
 				await ReplyAsync(string.Empty, false, DiscordExtensions.GetSubscriptionEmbed(Context, dat.Preferences.Subscriptions.W_Sortie, sub, "Daily Sortie Reminder")).SelfDestruct(30000);
 
 				dat.Preferences.Subscriptions.W_Sortie = sub;
-            }
+			}
 
-            if (@params.Contains("alert") || @params.Any("a"))
-            {
-                valid = true;
+			if (@params.Contains("alert") || @params.Any("a"))
+			{
+				valid = true;
 
-                await ReplyAsync(string.Empty, false, DiscordExtensions.GetSubscriptionEmbed(Context, dat.Preferences.Subscriptions.W_Alerts, sub, "Important Alert Notifications")).SelfDestruct(30000);
+				await ReplyAsync(string.Empty, false, DiscordExtensions.GetSubscriptionEmbed(Context, dat.Preferences.Subscriptions.W_Alerts, sub, "Important Alert Notifications")).SelfDestruct(30000);
 
-                dat.Preferences.Subscriptions.W_Alerts = sub;
-            }
+				dat.Preferences.Subscriptions.W_Alerts = sub;
+			}
 
-            if (@params.Contains("acolyte") || @params.Contains("acolytes") || @params.Any("ac"))
-            {
-                valid = true;
-                var found = false;
-                foreach (var acolyte in inf.persistentEnemies)
-                {
-                    if (@params.Contains(acolyte.agentType.ToLower()))
-                    {
-                        await ReplyAsync(string.Empty, false, DiscordExtensions.GetSubscriptionEmbed(Context, dat.Preferences.Acolytes.Any(acolyte.id), sub, acolyte.agentType + " Notifications")).SelfDestruct(30000);
+			if (@params.Contains("acolyte") || @params.Contains("acolytes") || @params.Any("ac"))
+			{
+				valid = true;
+				var found = false;
+				foreach (var acolyte in inf.persistentEnemies)
+				{
+					if (@params.Contains(acolyte.agentType.ToLower()))
+					{
+						await ReplyAsync(string.Empty, false, DiscordExtensions.GetSubscriptionEmbed(Context, dat.Preferences.Acolytes.Any(acolyte.id), sub, acolyte.agentType + " Notifications")).SelfDestruct(30000);
 
-								if (dat.Preferences.Acolytes.Any(acolyte.id) != sub)
-								{
-									if (sub)
-									{
-										dat.Preferences.Acolytes.Remove(acolyte.id);
-										SQLHandler.RemoveUserAcolyte(Context.User.Id, acolyte.id);
-									}
-									else
-									{
-										dat.Preferences.Acolytes.Add(acolyte.id);
-										SQLHandler.AddUserAcolyte(Context.User.Id, acolyte.id);
-									}
-								}
-                        found = true;
-                    }
-                }
-                if (!found)
-                {
-                    await ReplyAsync(string.Empty, false, DiscordExtensions.GetSubscriptionEmbed(Context, dat.Preferences.Subscriptions.W_Acolytes, sub, "Acolyte Notifications")).SelfDestruct(30000);
-                    dat.Preferences.Subscriptions.W_Acolytes = sub;
-                }
-            }
+						if (dat.Preferences.Acolytes.Any(acolyte.id) != sub)
+						{
+							if (sub)
+							{
+								dat.Preferences.Acolytes.Remove(acolyte.id);
+								SQLHandler.RemoveUserAcolyte(Context.User.Id, acolyte.id);
+							}
+							else
+							{
+								dat.Preferences.Acolytes.Add(acolyte.id);
+								SQLHandler.AddUserAcolyte(Context.User.Id, acolyte.id);
+							}
+						}
+						found = true;
+					}
+				}
+				if (!found)
+				{
+					await ReplyAsync(string.Empty, false, DiscordExtensions.GetSubscriptionEmbed(Context, dat.Preferences.Subscriptions.W_Acolytes, sub, "Acolyte Notifications")).SelfDestruct(30000);
+					dat.Preferences.Subscriptions.W_Acolytes = sub;
+				}
+			}
 
-            if (@params.Contains("invasion") || @params.Any("i"))
+			if (@params.Contains("invasion") || @params.Any("i"))
 			{
 				valid = true;
 
@@ -422,6 +445,63 @@ namespace CodeSelBot.Discord.Modules
 				await ReplyAsync(string.Empty, false, DiscordExtensions.GetErrorEmbed("Error", "Subscription Context is missing", Context, commandName: "Warframe Sub", errorPart: ErrorPart.User)).SelfDestruct(120000);
 			else
 				SQLHandler.UpdateUserSubs(dat);
+		}
+
+		private async Task WarframeNightwave(WarframeInfo inf, string context)
+		{
+			var embed = new EmbedBuilder();
+			var @params = context.Split(' ');
+
+			embed
+				.WithColor(186, 14, 37)
+				.WithFooter($"Requested by {Context.User.Username}")
+				.WithCurrentTimestamp()
+				.WithThumbnailUrl("https://content.invisioncic.com/Mwarframe/pages_media/1_GlyphMuckney05.png")
+				.WithTitle("Nightwave Challenges");
+
+			if (@params.Contains("noc"))
+				embed.Title += " No Credit";
+
+			if (@params.Contains("noe"))
+				embed.Title += " No Endo";
+
+			if (@params.Contains("good"))
+				embed.Title += " Good";
+
+			foreach (var nwGroup in inf.NightWave.activeChallenges.GroupBy(x => x.isDaily.If(0, x.isElite.If(2, 1))))
+			{
+				//if (@params.Contains("noc") && alert.rewardTypes.All(x => x == "credits"))
+				//	continue;
+				//if (@params.Contains("noe") && alert.rewardTypes.All(x => x == "endo"))
+				//	continue;
+				//if (@params.Contains("good") && !alert.rewardTypes.Any("nitain", "vandal", "wraith", "mutalist", "neuralSensors", "orokinCell", "oxium", "argonCrystal", "tellurium", "reactor", "catalyst", "forma", "synthula", "exilus", "riven", "kavatGene"))
+				//	continue;
+
+				switch (nwGroup.Key)
+				{
+					case 0:
+						embed.AddField("**Daily Challenges**".CenterText(55), $"`{new TimeSpan(inf.NightWave.activeChallenges.Where(x => x.isDaily).Min(x => x.expiry.Ticks) - DateTime.Now.Ticks).ToReadableString().CenterText(55, true)}`\n\u200b");
+						break;
+					case 1:
+						embed.AddField("\u200b\n" + "**Weekly Challenges**".CenterText(55), $"`{new TimeSpan(inf.NightWave.activeChallenges.FirstThat(x => !x.isDaily && !x.isElite).expiry.Ticks - DateTime.Now.Ticks).ToReadableString().CenterText(55, true)}`\n\u200b");
+						break;
+					case 2:
+						embed.AddField("\u200b\n" + "**Elite Challenges**".CenterText(55), $"`{new TimeSpan(inf.NightWave.activeChallenges.FirstThat(x => x.isElite).expiry.Ticks - DateTime.Now.Ticks).ToReadableString().CenterText(55, true)}`\n\u200b");
+						break;
+					default:
+						break;
+				}
+
+				foreach (var item in nwGroup)
+				{
+					embed.AddInlineField(item.title.CenterText(25), $"`{"-".Copy(22)}`\n{item.desc.JustifyContent(nwGroup)}");
+				}
+			}
+
+			if (embed.Fields.Count == 0)
+				await ReplyAsync("No challenges match your query").SelfDestruct(30000);
+			else
+				await ReplyAsync("", embed: embed.Build()).SelfDestruct(600000);
 		}
 	}
 }

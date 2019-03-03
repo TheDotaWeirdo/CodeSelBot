@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,46 @@ namespace CodeSelBot.Discord
 			if (str.Length > charLimit)
 				return str.Substring(0, charLimit - 3) + "...";
 			return str;
+		}
+
+		public static string CenterText(this string title, int width = 100, bool padright = false)
+		{
+			var sb = new StringBuilder();
+			foreach (var item in title.Split('\n','\r'))
+			{
+				for (int i = 0; i < (width - item.RegexReplace("<.+?>", "......").RegexReplace(":.+?:", "....").Length) / 2; i++)
+				{
+					sb.Append("\u200b\u2000");
+				}
+				sb.Append(item);
+				if(padright)
+				{
+					for (int i = 0; i < ((width - item.RegexReplace("<.+?>", "......").RegexReplace(":.+?:", "....").Length) / 2); i++)
+					{
+						sb.Append("\u200b\u2000");
+					}
+				}
+				sb.AppendLine();
+			}
+			return sb.ToString();
+		}
+
+		public static string JustifyContent<T>(this string text, IEnumerable<T> list)
+		{
+			var sb = new StringBuilder();
+			var width = 46 / list.Count().Between(1, 2);
+			var i = 0;
+
+			foreach (var c in text)
+			{
+				sb.Append(c);
+				i++;
+
+				if (i == width)
+					sb.AppendLine();
+			}
+
+			return sb.ToString();
 		}
 
 		public static UserData GetData(this IUser user)
